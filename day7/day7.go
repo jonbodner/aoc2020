@@ -118,24 +118,21 @@ How many individual bags are required inside your single shiny gold bag?
 */
 func (d *day7b) Done() {
 	seen := map[string]int{}
-	count := d.doneInner("shiny gold", seen)
-	fmt.Println(count)
+	d.doneInner("shiny gold", seen)
+	fmt.Println(seen["shiny gold"])
 }
 
-func (d *day7b) doneInner(curColor string, seen map[string]int) int {
+func (d *day7b) doneInner(curColor string, seen map[string]int) {
 	count := 0
 	curResults := d.rules[curColor]
 	for _, result := range curResults {
-		if num, ok := seen[result.color]; ok {
-			fmt.Println(result.color, num)
-			count += result.count + (result.count * num)
-		} else {
-			count += result.count + (result.count * d.doneInner(result.color, seen))
+		if _, ok := seen[result.color]; !ok {
+			d.doneInner(result.color, seen)
 		}
+		count += result.count * (seen[result.color] + 1)
 	}
 	seen[curColor] = count
 	fmt.Println(curColor, count)
-	return count
 }
 
 func main() {
