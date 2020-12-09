@@ -17,7 +17,7 @@ func TestIt(t *testing.T) {
 		t.Run(v.in, func(t *testing.T) {
 			row, col, id := calcRCID(v.in)
 			if row != v.row || col != v.col || id != v.id {
-				t.Error(row,col,id,v)
+				t.Error(row, col, id, v)
 			}
 		})
 	}
@@ -38,7 +38,7 @@ func TestIt2(t *testing.T) {
 		t.Run(v.in, func(t *testing.T) {
 			row, col, id := calcRCID2(v.in)
 			if row != v.row || col != v.col || id != v.id {
-				t.Error(row,col,id,v)
+				t.Error(row, col, id, v)
 			}
 		})
 	}

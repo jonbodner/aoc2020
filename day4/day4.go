@@ -139,7 +139,7 @@ var keyRules = map[string]func(string) bool{
 			return false
 		}
 		for _, v := range s[1:] {
-			if (v >= '0' && v <= '9') || (v>= 'a' && v <= 'f') {
+			if (v >= '0' && v <= '9') || (v >= 'a' && v <= 'f') {
 				continue
 			}
 			return false
@@ -148,7 +148,7 @@ var keyRules = map[string]func(string) bool{
 	},
 	// ecl (Eye Color) - exactly one of: amb blu brn gry grn hzl oth.
 	"ecl": func(s string) bool {
-		valid := map[string]bool {
+		valid := map[string]bool{
 			"amb": true,
 			"blu": true,
 			"brn": true,
@@ -164,7 +164,7 @@ var keyRules = map[string]func(string) bool{
 		if len(s) != 9 {
 			return false
 		}
-		for _ ,v := range s {
+		for _, v := range s {
 			if v < '0' || v > '9' {
 				return false
 			}

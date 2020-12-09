@@ -22,17 +22,16 @@ func (d *day5b) Done() {
 	for _, v := range d.data {
 		fmt.Println(v)
 		row, col, id := calcRCID2(v)
-		fmt.Println(row, col,id)
+		fmt.Println(row, col, id)
 		ids = append(ids, id)
 	}
 	sort.Ints(ids)
 	for i, v := range ids[:len(ids)-1] {
-		if ids[i+1] - v > 1 {
-			fmt.Println(v,ids[i+1])
+		if ids[i+1]-v > 1 {
+			fmt.Println(v, ids[i+1])
 		}
 	}
 }
-
 
 type day5a struct {
 	data []string
@@ -76,7 +75,7 @@ func (d *day5a) Done() {
 	for _, v := range d.data {
 		fmt.Println(v)
 		row, col, id := calcRCID(v)
-		fmt.Println(row, col,id)
+		fmt.Println(row, col, id)
 		if id > maxID {
 			maxID = id
 		}
@@ -92,7 +91,7 @@ func calcRCID(v string) (int, int, int) {
 		case 'F':
 			maxR = (minR + maxR) / 2
 		case 'B':
-			minR = (maxR + minR)/2
+			minR = (maxR + minR) / 2
 		}
 	}
 	minC := 0
@@ -102,7 +101,7 @@ func calcRCID(v string) (int, int, int) {
 		case 'L':
 			maxC = (minC + maxC) / 2
 		case 'R':
-			minC = (maxC + minC)/2
+			minC = (maxC + minC) / 2
 		}
 	}
 	id := maxR*8 + maxC
@@ -110,15 +109,15 @@ func calcRCID(v string) (int, int, int) {
 }
 
 func calcRCID2(v string) (int, int, int) {
-	v = strings.ReplaceAll(v,"F","0")
-	v = strings.ReplaceAll(v,"B","1")
-	v = strings.ReplaceAll(v,"L","0")
-	v = strings.ReplaceAll(v,"R","1")
-	row, err := strconv.ParseInt(v[:7],2, 64)
+	v = strings.ReplaceAll(v, "F", "0")
+	v = strings.ReplaceAll(v, "B", "1")
+	v = strings.ReplaceAll(v, "L", "0")
+	v = strings.ReplaceAll(v, "R", "1")
+	row, err := strconv.ParseInt(v[:7], 2, 64)
 	if err != nil {
 		panic(err)
 	}
-	col, err := strconv.ParseInt(v[7:],2, 64)
+	col, err := strconv.ParseInt(v[7:], 2, 64)
 	if err != nil {
 		panic(err)
 	}

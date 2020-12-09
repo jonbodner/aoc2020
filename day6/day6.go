@@ -43,7 +43,7 @@ func (d *day6b) Process(line string) {
 		d.data = append(d.data, data{counts: map[rune]int{}})
 		return
 	}
-	d.data[len(d.data)-1].numRows ++
+	d.data[len(d.data)-1].numRows++
 	curData := d.data[len(d.data)-1].counts
 	for _, v := range line {
 		curData[v]++

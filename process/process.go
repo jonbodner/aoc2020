@@ -20,4 +20,3 @@ func ProcessData(p Processor, filename string) {
 	}
 	p.Done()
 }
-

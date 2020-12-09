@@ -19,7 +19,7 @@ For example, suppose your expense report contained the following:
 299
 675
 1456
- */
+*/
 func main() {
 	processor(&holder2{})
 }
@@ -31,9 +31,9 @@ func (h *holder) process(n int) {
 }
 
 func (h *holder) done() {
-	for i := 0;i<len(*h)-1;i++ {
-		for j := i +1;j< len(*h);j++ {
-			if (*h)[i] + (*h)[j] == 2020 {
+	for i := 0; i < len(*h)-1; i++ {
+		for j := i + 1; j < len(*h); j++ {
+			if (*h)[i]+(*h)[j] == 2020 {
 				fmt.Println((*h)[i] * (*h)[j])
 				return
 			}
@@ -48,10 +48,10 @@ func (h *holder2) process(n int) {
 }
 
 func (h *holder2) done() {
-	for i := 0;i<len(*h)-2;i++ {
-		for j := i +1;j< len(*h)-1;j++ {
-			for k := j + 1; k<len(*h);k++ {
-				if (*h)[i] + (*h)[j] + (*h)[k]== 2020 {
+	for i := 0; i < len(*h)-2; i++ {
+		for j := i + 1; j < len(*h)-1; j++ {
+			for k := j + 1; k < len(*h); k++ {
+				if (*h)[i]+(*h)[j]+(*h)[k] == 2020 {
 					fmt.Println((*h)[i] * (*h)[j] * (*h)[k])
 					return
 				}

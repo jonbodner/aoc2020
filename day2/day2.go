@@ -23,21 +23,22 @@ func (d *day2a) process(line string) {
 	dash := 0
 	var char rune
 	var min, max int
-	loop: for {
-		switch line[pos]{
+loop:
+	for {
+		switch line[pos] {
 		case ':':
 			break loop
 		case '-':
 			min, _ = strconv.Atoi(line[:pos])
 			dash = pos
 		case ' ':
-			max, _ = strconv.Atoi(line[dash+1:pos])
+			max, _ = strconv.Atoi(line[dash+1 : pos])
 		default:
 			char = rune(line[pos])
 		}
 		pos++
 	}
-	found := strings.Count(line[pos+1:],string(char))
+	found := strings.Count(line[pos+1:], string(char))
 	if found >= min && found <= max {
 		d.count++
 	}
@@ -57,15 +58,16 @@ func (d *day2b) process(line string) {
 	dash := 0
 	var char byte
 	var min, max int
-	loop: for {
-		switch line[pos]{
+loop:
+	for {
+		switch line[pos] {
 		case ':':
 			break loop
 		case '-':
 			min, _ = strconv.Atoi(line[:pos])
 			dash = pos
 		case ' ':
-			max, _ = strconv.Atoi(line[dash+1:pos])
+			max, _ = strconv.Atoi(line[dash+1 : pos])
 		default:
 			char = line[pos]
 		}

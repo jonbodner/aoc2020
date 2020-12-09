@@ -108,9 +108,11 @@ func doIt(instructions []instruction, flipped int) {
 
 func (d *day8b) Done() {
 	var wg sync.WaitGroup
+	tried := 0
 	for i, v := range d.instructions {
 		switch v := v.(type) {
 		case nop:
+			tried++
 			wg.Add(1)
 			inst := make([]instruction, len(d.instructions))
 			copy(inst, d.instructions)
@@ -121,6 +123,7 @@ func (d *day8b) Done() {
 				doIt(inst, i)
 			}()
 		case jmp:
+			tried++
 			wg.Add(1)
 			inst := make([]instruction, len(d.instructions))
 			copy(inst, d.instructions)
@@ -128,11 +131,12 @@ func (d *day8b) Done() {
 			inst[i] = nop(v)
 			go func() {
 				defer wg.Done()
-				doIt(inst,i)
+				doIt(inst, i)
 			}()
 		}
 	}
 	wg.Wait()
+	fmt.Println(tried)
 }
 
 func main() {
