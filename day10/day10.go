@@ -62,9 +62,6 @@ func (d *day10b) Done() {
 }
 
 func findAllChains(nums []int, found []int) int {
-	if found[0] != 0 {
-		return found[0]
-	}
 	curVal := nums[0]
 	i := 0
 	for ; i < len(nums)-2 && nums[i+2]-curVal > 3; i++ {
@@ -72,7 +69,9 @@ func findAllChains(nums []int, found []int) int {
 	}
 	if i >= len(nums)-2 {
 		found[i] = 1
-		return 1
+	}
+	if found[i] != 0 {
+		return found[i]
 	}
 	total := 0
 	for j := i + 1; j < len(nums) && nums[j]-nums[i] <= 3; j++ {
