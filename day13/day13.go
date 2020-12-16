@@ -8,6 +8,7 @@ import (
 	"math"
 	"strconv"
 	"strings"
+	"time"
 )
 
 func main() {
@@ -17,7 +18,7 @@ func main() {
 
 type day13a struct {
 	arrival int
-	busses []int
+	busses  []int
 }
 
 func (a *day13a) Calculate() {
@@ -25,44 +26,62 @@ func (a *day13a) Calculate() {
 	minTime := math.MaxInt64
 	for _, v := range a.busses {
 		mults := a.arrival / v
-		if a.arrival == v * mults {
+		if a.arrival == v*mults {
 			// exact!
 			curID = v
 			minTime = 0
 			break
 		}
-		diff := v * (mults+1) - a.arrival
+		diff := v*(mults+1) - a.arrival
 		if diff < minTime {
 			minTime = diff
 			curID = v
 		}
 	}
-	fmt.Println(curID, minTime, curID * minTime)
+	fmt.Println(curID, minTime, curID*minTime)
 }
 
 type day13b struct {
-	arrival int
-	busses []int
-	biggest int
+	arrival    int
+	busses     []int
+	biggest    int
 	biggestPos int
 }
 
 func (a *day13b) Calculate() {
-	for i := 1;true;i++ {
+	ch := make(chan int, 12)
+	done := make(chan struct{})
+	for i := 0; i < 12; i++ {
+		go func() {
+			for {
+				select {
+				case <-done:
+					return
+				case val := <-ch:
+					start := val - a.biggestPos
+					success := true
+					for j, v := range a.busses {
+						if v == -1 {
+							continue
+						}
+						if (start+j)%v != 0 {
+							success = false
+							break
+						}
+					}
+					if success {
+						fmt.Println(start)
+						close(done)
+					}
+				}
+			}
+		}()
+	}
+	for i := 1; true; i++ {
 		val := a.biggest * i
-		start := val - a.biggestPos
-		success := true
-		for j, v := range a.busses {
-			if a.busses[j] == -1 {
-				continue
-			}
-			if (start + j) % v != 0 {
-				success = false
-				break
-			}
-		}
-		if success {
-			fmt.Println(start)
+		select {
+		case ch <- val:
+		case <-done:
 			return
 		}
 	}
@@ -77,8 +96,8 @@ func (a *day13b) CalculateBroken() {
 		factor *= v
 	}
 	fmt.Println(factor)
-	for i := 1;true;i++ {
-		if i % 1000 == 0 {
+	for i := 1; true; i++ {
+		if i%1000 == 0 {
 			fmt.Println(i)
 		}
 		val := i * factor
@@ -88,7 +107,7 @@ func (a *day13b) CalculateBroken() {
 			if a.busses[j] == -1 {
 				continue
 			}
-			if (start + j) % v != 0 {
+			if (start+j)%v != 0 {
 				success = false
 				break
 			}
@@ -114,7 +133,7 @@ func ProcessDataA(p *day13a, filename string) {
 	// busses
 	sc.Scan()
 	curRow = sc.Text()
-	parts := strings.Split(curRow,",")
+	parts := strings.Split(curRow, ",")
 	for _, v := range parts {
 		if v == "x" {
 			continue
@@ -136,10 +155,10 @@ func ProcessDataB(p *day13b, filename string) {
 	// busses
 	sc.Scan()
 	curRow := sc.Text()
-	parts := strings.Split(curRow,",")
+	parts := strings.Split(curRow, ",")
 	for _, v := range parts {
 		if v == "x" {
-			p.busses = append(p.busses,-1)
+			p.busses = append(p.busses, -1)
 			continue
 		}
 		id, err := strconv.Atoi(v)
@@ -152,5 +171,8 @@ func ProcessDataB(p *day13b, filename string) {
 		}
 		p.busses = append(p.busses, id)
 	}
+	start := time.Now()
 	p.Calculate()
+	end := time.Now()
+	fmt.Println(end.Sub(start))
 }

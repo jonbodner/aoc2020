@@ -83,7 +83,6 @@ type day12b struct {
 	wpY int
 }
 
-
 /*
 Almost all of the actions indicate how to move a waypoint which is relative to the ship's position:
 
@@ -103,7 +102,7 @@ func (d *day12b) Process(line string) {
 	}
 	switch line[0] {
 	case 'F':
-		for i := 0;i<num;i++ {
+		for i := 0; i < num; i++ {
 			d.posX += d.wpX
 			d.posY += d.wpY
 		}
